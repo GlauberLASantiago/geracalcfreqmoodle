@@ -5,82 +5,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" type="image/png" href="img/favicon.png"/>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
   <title>GeraCalcFreqMoodle</title>
-  <style>
-body{
-  background-color: #dfdfdf;
-  color:white;
-  font-family: 'Roboto', sans-serif;
-}
-p{
-  color:#454545;
-}
-main {
-  margin: auto;
-  max-width: 700px;
-  background-color: #D39335;
-  padding: 30px;
-  border-radius: 3px;
-}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134371726-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-input{
-  height: 25px;
-  border-radius: 3px;
-  border: 1px solid white;
-  font-size: 1rem;
-  width: 100px;
-  color: #255AA7;
-  margin: 2px;
-}
-input:hover{
-  border:1px dashed;
-}
-textarea{
-  width: 100%;
-  height: 200px;
-  margin: 20px 0 ;
-  border-radius: 3px;
-  border: none;
-}
-button {
-  background-color: #3575D3;
-  padding: 5px;
-  border-radius: 3px;
-  border: none;
-  color:white;
-}
-#creditos{
-  margin: 20px auto; 
-  color:white;
-}
-.campos {
-  margin: 20px auto;
-}
-#botoes {
-  margin: 5px 0;
-}
-li{
-  margin: 10px 0;
-}
-iframe{
-  padding: 3px;
-  max-width: 100%;
-  border: solid 2px;
-  border-radius: 3px;
-}
-#creditos {
-  font-size: 0.8rem;
-  font-weight: lighter;
-}
-.calculadora{
-  width:100%;
-  display:grid;
-  grid-template-columns: 1fr 2fr;
-}
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-134371726-2');
+  </script>
+  <script src="https://kit.fontawesome.com/26570cd0f3.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background-color: #dfdfdf;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    p {
+      color: #454545;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      background-image: url(img/logo-moodle.png);
+      background-repeat: no-repeat;
+      padding-left: 60px;
+    }
+
+    main {
+      margin: auto;
+      max-width: 700px;
+      background-color: #D39335;
+      padding: 30px;
+      border-radius: 3px;
+    }
+
+    input {
+      height: 25px;
+      border-radius: 3px;
+      border: 1px solid white;
+      font-size: 1rem;
+      width: 100px;
+      color: #255AA7;
+      margin: 2px;
+    }
+
+    input:hover {
+      border: 1px dashed;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin: 20px 0;
+      border-radius: 3px;
+      border: none;
+    }
+
+    button {
+      background-color: #3575D3;
+      padding: 5px;
+      border-radius: 3px;
+      border: none;
+      color: white;
+    }
+
+    #creditos {
+      margin: 20px auto;
+      color: white;
+    }
+
+    .campos {
+      margin: 20px auto;
+    }
+
+    #botoes {
+      margin: 5px 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    iframe {
+      padding: 3px;
+      max-width: 100%;
+      border: solid 2px;
+      border-radius: 3px;
+    }
+
+    #creditos {
+      font-size: 0.8rem;
+      font-weight: lighter;
+    }
+
+    .calculadora {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+    }
+    #saida-flash {
+      -webkit-transition: opacity 600ms, visibility 600ms;
+  transition: opacity 600ms, visibility 600ms;
+      position: relative;
+      opacity: 0;
+      visibility: hidden;
+      top:-100px;
+      left:20px;
+      background-color: #D39335;
+      border-radius: 3px;
+      padding: 10px;
+    }
+    @media (max-width: 500px) {
+      .calculadora {
+        display: block;
+      }
+    }
   </style>
 </head>
- 
+
 <body>
   <main>
     <h1>Gerador de cálculo de frequência para o Moodle</h1>
@@ -88,25 +137,26 @@ iframe{
 
       <p> Aplicação para fazer com que o Moodle calcule, sozinho, a frêquencia final da disciplina, baseando-se em se estudante obteve alguma pontuação em cada uma das atividades.</p>
       <p>Instruções básicas:
-      <ol>  
-      <li>No Moodle, entre em "Configuração do Livro de Notas".</li>
+      <ol>
+        <li>No Moodle, entre em "Configuração do Livro de Notas".</li>
         <li>Adicione uma categoria chamada "Frequencia" e indique a agregação como "Média das notas " e o valor máximo de 0. </li>
         <li>Dentro desta categoria criada, adicione um item de nota chamado "Frequencia" e, neste item, clique em "Editar" e escolha "Editar Cálculo".</li>
         <li>Verifique quais atividades possuem números de IDs, na verdade é mais fácil indicar letras de ID, e não números. </li>
         <li>Se a atividade não tiver nenhum ID, digite um ID (a, b, c, d, por exemplo) e clique em "Adicionar números de identificação". </li>
-        <li>Aqui, no presente site, em cada linha do quadro, indique, na esquerda, o ID da atividade conforme o Moodle e na direita, digite o peso, em termos de frequência. Por exemplo: Se você achar que as atividades possuem o mesmo peso para a frequencia, basta deixar 1 em todas. Senão, mude conforme desejar. Talvez, imaginando o número de horas!</li>
+        <li>Aqui, no presente site, em cada linha do quadro, indique, na esquerda, o ID da atividade conforme o Moodle e na direita, digite o peso, em termos de frequência. Por exemplo: Se você achar que as atividades possuem o mesmo peso para a
+          frequencia, basta deixar 1 em todas. Senão, mude conforme desejar. Talvez, imaginando o número de horas!</li>
         <li>Depois, basta gerar o cálculo, copiá-lo e colá-lo no Moodle, no campo "Cálculo". Finalmente, Salve as mudanças.</li>
-        </ol>
+      </ol>
     </div>
-<section class="calculadora">
-    <div class="calculadora-calc">
-            <div id="campos">
-    </div>
-    <div id="botoes">
-      <button type="button" onclick="novo()" name="button">Adicionar item</button>
-      <button type="button" onclick="calcular()" name="button">Gerar cálculo</button>
-    </div>
-    </div>
+    <section class="calculadora">
+      <div class="calculadora-calc">
+        <div id="campos">
+        </div>
+        <div id="botoes">
+          <button type="button" onclick="novo()" name="button"><i class="fas fa-plus"></i> Adicionar item</button>
+          <button type="button" onclick="calcular()" name="button"><i class="fas fa-calculator"></i> Gerar cálculo</button>
+        </div>
+      </div>
       <div class="calculadora-info">
         <p>
           Observação:
@@ -118,13 +168,17 @@ iframe{
         </ul>
       </div>
 
-      </section>
-    <div>
+    </section>
+    <div id="saida-container">
       <textarea id="saida"></textarea>
+      <div id="copy">
+        <button onclick="copiar()"><i class="fas fa-copy"></i> Copiar para a área de transferência</button>
+      </div>
+      <span id="saida-flash"><i class="fas fa-clipboard"></i> Copiado</span>
     </div>
     <p>
-      <p> A lógica deste sistema é que se o aluno obtiver qualquer nota superior a 0 em uma atividade, ele já será contemplado com a frequência total relativa àquela atividade.</p>
-      Assista ao vídeo tutorial sobre a utilização do código gerado, no sistema de notas do Moodle.
+    <p> A lógica deste sistema é que se o aluno obtiver qualquer nota superior a 0 em uma atividade, ele já será contemplado com a frequência total relativa àquela atividade.</p>
+    Assista ao vídeo tutorial sobre a utilização do código gerado, no sistema de notas do Moodle.
     </p>
     <div>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/_FUjH4XsT3w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -136,6 +190,7 @@ iframe{
   <script>
     let saida = document.getElementById('saida');
     let campos = document.getElementById('campos');
+    let flash = document.getElementById('saida-flash');
 
     adicionarCampo(5);
 
@@ -161,7 +216,7 @@ iframe{
       else
         adicionarCampo(5);
     }
-    //=(((([[ID1]]/([[ID1]]+0.0001))*peso1)+(([[ID2]]/([[ID2]]+0.0001))*peso2)+(([[ID3]]/([[ID3]]+0.0001))*peso31))/3*100)
+
     function novo() {
       adicionarCampo(1);
     }
@@ -181,7 +236,17 @@ iframe{
         campos.appendChild(novo);
       }
     }
+    function copiar() {
+      saida.select();
+      saida.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      flash.style.cssText = "opacity: 0.8; visibility: visible; top";
+
+      setTimeout(function(){
+        flash.style.cssText = "opacity: 0; visibility: hidden;";
+      }, 600);
+
+    }
   </script>
 </body>
-
 </html>
