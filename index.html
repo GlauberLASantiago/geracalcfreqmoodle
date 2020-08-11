@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GeraCalcFreqMoodle</title>
+</head>
+
+<body style="background-color: orange; margin: 20px; font-family: arial;">
+  <h1 style="color: white;">Gerador de cálculo de frequência para o Moodle</h1>
+  <div>
+    <p>Na esquerda, digite o ID da atividade no Moodle.</p>
+    <p>Na direita, digite o peso, em termos de frequência.</p>
+  </div>
+  <div id="campos" style="margin: 20px auto;">
+  </div>
+  <div>
+    <button type="button" onclick="novo()" name="button">Adicionar item</button>
+    <button type="button" onclick="calcular()" name="button">Gerar cálculo</button>
+  </div>
+  <div>
+    <textarea style="margin: 20px auto; width: 100%;" id="saida" cols="30" rows="10"></textarea>
+  </div>
+  <p style="color: white;">Assista ao vídeo tutorial sobre a utilização do código gerado, no sistema de notas do Moodle.</p>
+  <div>
+<iframe style="max-width: 100%" width="560" height="315" src="https://www.youtube.com/embed/2e8UZQBqlP8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+<div id="creditos" style="margin: 20px auto; color:white;">
+  Esta aplicação foi desenvolvida para a Universidade Federal de São Carlos por Gidenilson Santiago, baseada em um algoritmo elaborado por Glauber Santiago, em 2020.
+</div>
+  <script>
+    let saida = document.getElementById('saida');
+    let campos = document.getElementById('campos');
+
+    adicionarCampo(5);
+
+
+    function calcular() {
+      saida.value = "";
+      let ids = document.querySelectorAll('.campo .id');
+      let pesos = document.querySelectorAll('.campo .peso');
+      let formula = "";
+      let total = 0;
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i].value != "" && pesos[i].value != "" && pesos[i].value > 0) {
+          total++;
+          formula = formula + `+(([[${ids[i].value}]]/([[${ids[i].value}]]+0.0001))*${pesos[i].value})`;
+        } else {
+          ids[i].setAttribute('type', 'hidden');
+          pesos[i].setAttribute('type', 'hidden');
+        }
+      }
+      formula = formula.substring(1, formula.length);
+      if (formula != "")
+        saida.value = `=((${formula})/${total}*100)`;
+      else
+        adicionarCampo(5);
+    }
+    //=(((([[ID1]]/([[ID1]]+0.0001))*peso1)+(([[ID2]]/([[ID2]]+0.0001))*peso2)+(([[ID3]]/([[ID3]]+0.0001))*peso31))/3*100)
+    function novo() {
+      adicionarCampo(1);
+    }
+
+    function adicionarCampo(n) {
+      for (let i = 0; i < n; i++) {
+        let novo = document.createElement('div');
+        novo.setAttribute('class', 'campo');
+        let id = document.createElement('input');
+        id.setAttribute('class', 'id');
+        let peso = document.createElement('input');
+        peso.value = 1;
+        peso.setAttribute('class', 'peso');
+        peso.setAttribute('type', 'number');
+        novo.appendChild(id)
+        novo.appendChild(peso);
+        campos.appendChild(novo);
+      }
+    }
+  </script>
+</body>
+
+</html>
