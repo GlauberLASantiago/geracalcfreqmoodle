@@ -93,12 +93,27 @@ iframe{
         <li>Depois, basta gerar o cálculo, copiá-lo e colá-lo no Moodle, no campo "Cálculo". Finalmente, Salve as mudanças.</li>
         </ol>
     </div>
-    <div id="campos">
+<section class="calculadora">
+    <div class="calculadora-calc">
+            <div id="campos">
     </div>
     <div id="botoes">
       <button type="button" onclick="novo()" name="button">Adicionar item</button>
       <button type="button" onclick="calcular()" name="button">Gerar cálculo</button>
     </div>
+    </div>
+      <div class="calculadora-info">
+        <p>
+          Observação:
+        </p>
+        <ul>
+          <li>
+            Os campos com ID vazios ou peso menor que 1 serão automaticamente ignorados e excluídos.
+          </li>
+        </ul>
+      </div>
+
+      </section>
     <div>
       <textarea id="saida"></textarea>
     </div>
